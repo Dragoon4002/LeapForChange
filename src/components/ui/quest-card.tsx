@@ -1,66 +1,7 @@
 import { cn } from "@/lib/utils"
 import { FrogIcon } from './frog-icon'
-
-const Card = ({ className, ...props }) => (
-  <div
-    className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm",
-      className
-    )}
-    {...props}
-  />
-)
-
-const CardHeader = ({ className, ...props }) => (
-  <div
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
-    {...props}
-  />
-)
-
-const CardTitle = ({ className, ...props }) => (
-  <h3
-    className={cn(
-      "text-2xl font-semibold leading-none tracking-tight",
-      className
-    )}
-    {...props}
-  />
-)
-
-const CardDescription = ({ className, ...props }) => (
-  <p
-    className={cn("text-sm text-muted-foreground", className)}
-    {...props}
-  />
-)
-
-const CardContent = ({ className, ...props }) => (
-  <div className={cn("p-6 pt-0", className)} {...props} />
-)
-
-const CardFooter = ({ className, ...props }) => (
-  <div
-    className={cn("flex items-center p-6 pt-0", className)}
-    {...props}
-  />
-)
-
-function Button({ children, className, ...props }) {
-  return (
-    <button
-      className={cn(
-        "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-        "bg-primary text-primary-foreground hover:bg-primary/90",
-        "h-10 px-4 py-2",
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </button>
-  )
-}
+import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "./card"
+import { Button } from "./button"
 
 interface QuestCardProps {
   title: string
@@ -93,7 +34,7 @@ export function QuestCard({ title, description, points, difficulty, onStart }: Q
         </div>
       </CardContent>
       <CardFooter>
-        {/* <Button onClick={onStart} className="w-full">Start Quest</Button> */}
+        <Button onClick={onStart} className="w-full">Start Quest</Button>
       </CardFooter>
     </Card>
   )

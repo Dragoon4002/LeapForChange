@@ -3,46 +3,9 @@
 import { useState } from 'react'
 import { cn } from "@/lib/utils"
 import { FishIcon as Frog, Award, Gift } from 'lucide-react'
-
-function Button({ children, className, ...props }) {
-  return (
-    <button
-      className={cn(
-        "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-        "bg-primary text-primary-foreground hover:bg-primary/90",
-        "h-10 px-4 py-2",
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </button>
-  )
-}
-
-function Input({ className, ...props }) {
-  return (
-    <input
-      className={cn(
-        "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function Label({ className, ...props }) {
-  return (
-    <label
-      className={cn(
-        "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
-        className
-      )}
-      {...props}
-    />
-  )
-}
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false)

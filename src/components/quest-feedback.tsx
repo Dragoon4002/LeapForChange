@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
-import { Frog, Award } from 'lucide-react'
+import { Award } from 'lucide-react'
 
 interface QuestFeedbackProps {
   isOpen: boolean
@@ -32,7 +32,7 @@ export function QuestFeedback({ isOpen, onClose, questName, pointsEarned, newBad
         </DialogHeader>
         <div className="flex flex-col items-center py-4">
           <div className={`relative ${isAnimating ? 'animate-bounce' : ''}`}>
-            <Frog className="w-24 h-24 text-green-500" />
+            {/* <Frog className="w-24 h-24 text-green-500" /> */}
             {newBadge && (
               <Award className="w-8 h-8 text-yellow-500 absolute -top-2 -right-2" />
             )}

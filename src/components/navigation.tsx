@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import { Home, Award, Trophy, Settings } from 'lucide-react'
 import { ConnectButton } from 'thirdweb/react'
 import { createThirdwebClient } from 'thirdweb'
+import { Button } from './ui/button'
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: Home },
@@ -14,22 +15,6 @@ const navItems = [
   { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
   { href: '/profile', label: 'Profile', icon: Settings },
 ]
-
-function Button({ children, className, ...props }) {
-  return (
-    <button
-      className={cn(
-        "flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-        "bg-primary text-primary-foreground hover:bg-primary/90",
-        "h-10 px-4 py-2",
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </button>
-  )
-}
 
 export function Navigation() {
   const pathname = usePathname()
@@ -49,9 +34,8 @@ export function Navigation() {
         {navItems.map((item) => {
           const isActive = pathname === item.href
           return (
-            <Link href={item.href}>
+            <Link href={item.href} key={item.href}>
               <Button
-                key={item.href}
                 asChild
                 variant={isActive ? "secondary" : "ghost"}
                 className={` w-full justify-start ${isActive ? 'bg-green-700' : ''}`}

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { Toast, ToastProvider, ToastViewport } from "@/components/ui/toast"
+import { Toast, ToastProvider, ToastViewport } from '@/components/ui/toast'
 import { FishIcon as Frog, Award, Bell } from 'lucide-react'
 
 interface Notification {
@@ -26,7 +26,7 @@ export function Notifications() {
     }, 10000) // New notification every 10 seconds
 
     return () => clearInterval(interval)
-  }, [])
+  }, [notifications.length])
 
   const removeNotification = (id: number) => {
     setNotifications(prev => prev.filter(notification => notification.id !== id))

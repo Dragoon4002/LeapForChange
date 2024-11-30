@@ -1,14 +1,23 @@
-"use client"
+"use client";
 
-import { useState } from 'react'
-import { cn } from "@/lib/utils"
-import { FishIcon as Frog, Trophy } from 'lucide-react'
-// import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui"
-import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { FishIcon as Frog, Trophy } from "lucide-react";
+import {
+  ButtonHTMLAttributes,
+  ReactNode,
+} from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-function ButtonComp({ children, className, ...props }) {
+interface ButtonCompProps {
+  children?: ReactNode
+  className?: string;
+  [key: string]: any; // To allow other props like onClick, type, etc.
+}
+
+// ButtonComp Component
+function ButtonComp({ children, className, ...props }: ButtonCompProps) {
   return (
     <button
       className={cn(
@@ -21,22 +30,35 @@ function ButtonComp({ children, className, ...props }) {
     >
       {children}
     </button>
-  )
+  );
 }
 
-const leaderboardData = [
+// Define the structure of the leaderboard data
+type LeaderboardEntry = {
+  id: number;
+  name: string;
+  points: number;
+  quests: number;
+  impact: number;
+};
+
+// Mock data for the leaderboard
+const leaderboardData: LeaderboardEntry[] = [
   { id: 1, name: "FrogMaster", points: 5000, quests: 50, impact: 95 },
   { id: 2, name: "EcoWarrior", points: 4800, quests: 48, impact: 92 },
   { id: 3, name: "GreenLeaper", points: 4600, quests: 46, impact: 90 },
   { id: 4, name: "RiverGuardian", points: 4400, quests: 44, impact: 88 },
   { id: 5, name: "ForestHopper", points: 4200, quests: 42, impact: 86 },
-  // Add more users as needed
-]
+];
 
 export default function LeaderboardPage() {
-  const [sortBy, setSortBy] = useState("points")
+  const [sortBy, setSortBy] = useState<keyof LeaderboardEntry>("points");
 
-  const sortedData = [...leaderboardData].sort((a, b) => b[sortBy] - a[sortBy])
+  const sortedData = [...leaderboardData].sort((a, b) => {
+    const valueA = Number(a[sortBy] || 0); // Convert to number or default to 0
+    const valueB = Number(b[sortBy] || 0);
+    return valueB - valueA;
+});
 
   return (
     <div className="min-h-screen bg-green-50 p-8">
@@ -45,7 +67,7 @@ export default function LeaderboardPage() {
       <div className="bg-white rounded-lg shadow-lg p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">Top Froggy Adventurers</h2>
-          <Select onValueChange={setSortBy} defaultValue={sortBy}>
+          <Select onValueChange={(value) => setSortBy(value as keyof LeaderboardEntry)} defaultValue={sortBy}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
@@ -104,6 +126,5 @@ export default function LeaderboardPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-
