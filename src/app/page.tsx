@@ -1,100 +1,92 @@
 "use client";
 
-import Image from "next/image";
+import Link from "next/link";
 import { ConnectButton } from "thirdweb/react";
-import thirdwebIcon from "@public/thirdweb.svg";
-import { client } from "./client";
+import { createThirdwebClient } from "thirdweb";
+import { FishIcon as Frog, Leaf, Droplets, Thermometer } from 'lucide-react'
+import { cn } from "@/lib/utils";
+import { Progress } from "@/components/ui/progress";
 
-export default function Home() {
+function Button({ children, className, ...props }) {
   return (
-    <main className="p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-lg mx-auto">
-      <div className="py-20">
-        <Header />
-
-        <div className="flex justify-center mb-20">
-          <ConnectButton
-            client={client}
-            appMetadata={{
-              name: "Example App",
-              url: "https://example.com",
-            }}
-          />
-        </div>
-
-        <ThirdwebResources />
-      </div>
-    </main>
-  );
-}
-
-function Header() {
-  return (
-    <header className="flex flex-col items-center mb-20 md:mb-20">
-      <Image
-        src={thirdwebIcon}
-        alt=""
-        className="size-[150px] md:size-[150px]"
-        style={{
-          filter: "drop-shadow(0px 0px 24px #a726a9a8)",
-        }}
-      />
-
-      <h1 className="text-2xl md:text-6xl font-semibold md:font-bold tracking-tighter mb-6 text-zinc-100">
-        thirdweb SDK
-        <span className="text-zinc-300 inline-block mx-1"> + </span>
-        <span className="inline-block -skew-x-6 text-blue-500"> Next.js </span>
-      </h1>
-
-      <p className="text-zinc-300 text-base">
-        Read the{" "}
-        <code className="bg-zinc-800 text-zinc-300 px-2 rounded py-1 text-sm mx-1">
-          README.md
-        </code>{" "}
-        file to get started.
-      </p>
-    </header>
-  );
-}
-
-function ThirdwebResources() {
-  return (
-    <div className="grid gap-4 lg:grid-cols-3 justify-center">
-      <ArticleCard
-        title="thirdweb SDK Docs"
-        href="https://portal.thirdweb.com/typescript/v5"
-        description="thirdweb TypeScript SDK documentation"
-      />
-
-      <ArticleCard
-        title="Components and Hooks"
-        href="https://portal.thirdweb.com/typescript/v5/react"
-        description="Learn about the thirdweb React components and hooks in thirdweb SDK"
-      />
-
-      <ArticleCard
-        title="thirdweb Dashboard"
-        href="https://thirdweb.com/dashboard"
-        description="Deploy, configure, and manage your smart contracts from the dashboard."
-      />
-    </div>
-  );
-}
-
-function ArticleCard(props: {
-  title: string;
-  href: string;
-  description: string;
-}) {
-  return (
-    <a
-      href={props.href + "?utm_source=next-template"}
-      target="_blank"
-      className="flex flex-col border border-zinc-800 p-4 rounded-lg hover:bg-zinc-900 transition-colors hover:border-zinc-700"
+    <button
+      className={cn(
+        "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        "bg-primary text-primary-foreground hover:bg-primary/90",
+        "h-10 px-4 py-2",
+        className
+      )}
+      {...props}
     >
-      <article>
-        <h2 className="text-lg font-semibold mb-2">{props.title}</h2>
-        <p className="text-sm text-zinc-400">{props.description}</p>
-      </article>
-    </a>
-  );
+      {children}
+    </button>
+  )
+}
+
+
+export default function LandingPage() {
+  const client = createThirdwebClient({
+    clientId: '3e76e10a04eadb82eff1642ad0b035dd',});
+
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-green-100 to-green-200">
+        <main className="container mx-auto px-4">
+          <section className="text-center py-20">
+            <h1 className="text-5xl font-bold text-green-800 mb-4">Start Your Journey to Save the Earth with Frogs!</h1>
+            <p className="text-xl text-green-700 mb-8">Join the Quest to Protect Our Oceans, Land, and Climate.</p>
+            <div className="flex justify-center gap-4 mb-8">
+              <Button size="lg" className="bg-green-500 hover:bg-green-600">Start Now</Button>
+              <Button size="lg" variant="outline" className="bg-green-500 hover:bg-green-600">Learn More</Button>
+            </div>
+            <div className="max-w-md mx-auto">
+              <Progress value={0} className="h-2 bg-green-200" />
+              <p className="text-sm text-green-700 mt-2">0% complete - Start your journey!</p>
+            </div>
+          </section>
+  
+          <section className="grid md:grid-cols-3 gap-8 py-12">
+            {[
+              { icon: Droplets, title: "Protect Oceans", description: "Learn about marine conservation and take action to save our seas." },
+              { icon: Leaf, title: "Preserve Forests", description: "Discover the importance of forests and help in reforestation efforts." },
+              { icon: Thermometer, title: "Combat Climate Change", description: "Understand climate change and reduce your carbon footprint." },
+            ].map((goal, index) => (
+              <div key={index} className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 group">
+                <div className="flex justify-center mb-4">
+                  <goal.icon className="w-16 h-16 text-green-500 group-hover:text-green-600 transition-colors duration-300" />
+                </div>
+                <h2 className="text-2xl font-bold text-green-800 mb-2">{goal.title}</h2>
+                <p className="text-green-700">{goal.description}</p>
+              </div>
+            ))}
+          </section>
+        </main>
+  
+        <footer className="bg-green-800 text-white py-8">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-wrap justify-between items-center">
+              <div className="w-full md:w-1/3 mb-4 md:mb-0">
+                <h3 className="text-xl font-bold mb-2">FroggyLearning</h3>
+                <p>Join the Global Frog Community</p>
+              </div>
+              <div className="w-full md:w-1/3 mb-4 md:mb-0">
+                <h4 className="font-bold mb-2">Quick Links</h4>
+                <ul>
+                  <li><Link href="/privacy" className="hover:underline">Privacy Policy</Link></li>
+                  <li><Link href="/terms" className="hover:underline">Terms of Service</Link></li>
+                  <li><Link href="/contact" className="hover:underline">Contact Us</Link></li>
+                </ul>
+              </div>
+              <div className="w-full md:w-1/3">
+                <h4 className="font-bold mb-2">Follow Us</h4>
+                <div className="flex space-x-4">
+                  <Link href="#" className="hover:text-green-300"><Frog className="w-6 h-6" /></Link>
+                  <Link href="#" className="hover:text-green-300"><Leaf className="w-6 h-6" /></Link>
+                  <Link href="#" className="hover:text-green-300"><Droplets className="w-6 h-6" /></Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    )
 }
